@@ -4,6 +4,8 @@ This is a very simple service that we use as an interview exercise. This is a [C
 
 It supports four API endpoints, all accessible via simple GETs and POSTs.
 
+The live server is available at [https://game-of-life-service-ai3nmiz7aa-uc.a.run.app](https://game-of-life-service-ai3nmiz7aa-uc.a.run.app).
+
 ## 1. `GET /world`
 will return a 302 redirect to a url to create a unique world.
 
@@ -80,3 +82,14 @@ Access this via a browser to interact with the runs of your latest submission. T
 
 ![](https://cln.sh/l4yw0C)
 
+
+# Local Development
+
+1. Clone the code, `git clone git@github.com:GainCompliance/game-of-life-service.git`
+2. Install npm dependencies `npm install`
+3. Copy `.env.sample` to `.env` and update the values
+3. Run with `npm run dev`
+
+# Deployment
+
+Commits to main will automatically be deployed to https://game-of-life-service-ai3nmiz7aa-uc.a.run.app
