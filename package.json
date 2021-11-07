@@ -12,7 +12,7 @@
     "url": "git+https://github.com/GainCompliance/game-of-life-service.git"
   },
   "author": "Brian Anderson <brian@gaincompliance.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/GainCompliance/game-of-life-service/issues"
   },
