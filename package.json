@@ -1,0 +1,31 @@
+{
+  "name": "game-of-life-service",
+  "version": "1.0.0",
+  "description": "A simple api-only server to generate game of life environments",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GainCompliance/game-of-life-service.git"
+  },
+  "author": "Brian Anderson <brian@gaincompliance.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GainCompliance/game-of-life-service/issues"
+  },
+  "homepage": "https://github.com/GainCompliance/game-of-life-service#readme",
+  "dependencies": {
+    "@google-cloud/storage": "^5.15.5",
+    "express": "^4.17.1",
+    "nanoid": "^3.1.30",
+    "seedrandom": "^3.0.5"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "jest": "^27.3.1",
+    "nodemon": "^2.0.14"
+  }
+}

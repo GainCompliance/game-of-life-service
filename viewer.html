@@ -1,0 +1,124 @@
+<html>
+  <head>
+    <title>Game of Life Viewer</title>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-100">
+    <div class="grid place-items-center h-screen">
+      <div class="shadow-xl bg-white rounded ">
+        <div class="text-gray-500 flex justify-around border-b py-3">
+          <p>ID: <span id="id"></span></p>
+          <p>Generation: <span class="w-8 text-right inline-block" id="currentGeneration">0</span> of <span id="generationCount"></span></p>
+        </div>
+        <div id="loading" class="fixed" style="width:600px; margin-top:250px">
+          <div class="text-center text-3xl text-gray-600"><span class="text-5xl block animate-spin mb-4">🧬</span>loading life</div>
+        </div>
+        <canvas class="m-2" id="world" width="600" height="600"></canvas>
+        <div class="flex pt-2 pb-2 border-t">
+          <input id="scrubber" class="w-5/6 m-auto" type="range" value=0 min=0, max=100 />
+        </div>
+        <div class=" flex justify-around border-t">
+          <button id="back" class="rounded p-2 m-2 shadow hover:bg-blue-100 hover:text-blue-500">&larr; Back</button>
+          <button id="run" class="rounded p-2 px-4 m-2 shadow hover:bg-blue-100 hover:text-blue-500">Run &triangleright;</button>
+          <button id="next" class="rounded p-2 m-2 shadow hover:bg-blue-100 hover:text-blue-500">Next &rarr;</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    const [_, id] = window.location.pathname.match(/\/([A-Za-z0-9_-]+)$/)
+    const worldElement = document.getElementById('world');
+    const worldCanvas = worldElement.getContext('2d');
+    const worldWidth = worldElement.clientWidth;
+    const scrubberElement = document.getElementById('scrubber');
+    const currentGenerationElement = document.getElementById('currentGeneration');
+    const generationCountElement = document.getElementById('generationCount');
+    const idLabelElement = document.getElementById('id');
+    const backButton = document.getElementById('back');
+    const nextButton = document.getElementById('next');
+    const runButton = document.getElementById('run');
+
+    const LEFT_ARROW = 37;
+    const RIGHT_ARROW = 39;
+    const SPACE_BAR = 32;
+
+    const hideLoadingMessage = () => {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    const updateLoadingMessage = (message) => {
+      const messageElement = document.getElementById('loading');
+      messageElement.style.display = 'fixed';
+      messageElement.querySelector('div').innerHTML = message;
+    }
+
+    const setUpWorld = ({generationCount, id, generations}) => {
+      hideLoadingMessage();
+      idLabelElement.innerText = id;
+      generationCountElement.innerText = generationCount;
+      scrubberElement.max = generationCount;
+      var size = generations[0][0].length;
+      const cellSize = (worldWidth/size) - 1;
+      let currentGeneration = 1;
+
+      const drawGeneration = (generation) => {
+        worldCanvas.fillStyle = 'white';
+        worldCanvas.fillRect(0, 0, worldWidth, worldWidth);
+        currentGenerationElement.innerHTML = generation;
+        scrubberElement.value = generation
+        const world = generations[generation - 1];
+        for(let row = 0; row < world.length; row++) {
+          for(let column = 0; column < world[row].length; column++) {
+            const life = world[row][column];
+            worldCanvas.fillStyle = life ? 'lightblue' : 'white';
+            const [x,y] = [row * (cellSize+1), column * (cellSize+1)];
+            worldCanvas.fillRect(x, y, cellSize, cellSize);
+          }
+        }
+      }
+      drawGeneration(currentGeneration);
+
+      setGeneration = (gen) => {
+        currentGeneration = Math.min(Math.max(1, gen), generationCount - 1);
+        drawGeneration(currentGeneration);
+      }
+      let isPlaying = false;
+
+      const gotoPreviousGeneration = () => {isPlaying = false; setGeneration(currentGeneration-1)}
+      const gotoNextGeneration = () => {isPlaying = false; setGeneration(currentGeneration+1)}
+      const play = () => {
+        isPlaying = !isPlaying;
+        let intervalId = setInterval(() => {
+          if(isPlaying && currentGeneration < generationCount) {
+            setGeneration(currentGeneration+1);
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 64);
+      }
+
+      backButton.addEventListener('click', gotoPreviousGeneration)
+      nextButton.addEventListener('click', gotoNextGeneration)
+      runButton.addEventListener('click', play);
+
+      document.addEventListener('keydown', e => {
+        if(e.keyCode == SPACE_BAR) play();
+        if(e.keyCode == LEFT_ARROW) gotoPreviousGeneration();
+        if(e.keyCode == RIGHT_ARROW) gotoNextGeneration();
+      })
+
+      scrubberElement.addEventListener('input', () => {setGeneration(scrubberElement.value)});
+
+
+    }
+
+    fetch(`/results/${id}`).then(response => {
+      if(response.ok){
+        response.json().then(data => setUpWorld(data))
+      } else {
+        response.text().then(updateLoadingMessage);
+        console.log('hi there, I bet you are wondering what is going wrong, likely you didn\'t follow the 302 redirect url', response)
+      }
+    });
+  </script>
+</html>
