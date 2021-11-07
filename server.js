@@ -7,14 +7,14 @@ const seedrandom = require('seedrandom');
 const { generateWorld } = require('./game-of-life-world');
 const {Storage} = require('@google-cloud/storage');
 const path = require('path');
-const fs = require('fs');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const GENERATION_RANGE = {min: 50, max: 500}
 const WORLD_SIZE_RANGE = {min: 10, max: 100}
 
 const storage = new Storage();
 const BUCKET_NAME = process.env.BUCKET_NAME
+const HOST = process.env.K_SERVICE || 'http://localhost.com'
 
 app.use(express.json({limit:"50mb"}));
 
@@ -65,7 +65,7 @@ app.post('/results', async (req, res) => {
 
   await file.save(JSON.stringify(req.body), { metadata: {contentType: 'application/json'}})
   console.log(`saved to ${gameOfLifeBucket.name}/${file.name}`)
-  res.redirect(302, `http://localhost:3000/viewer/${submissionId}`)
+  res.redirect(302, `${HOST}/viewer/${submissionId}`)
 })
 
 app.get('/results/:submissionId', async (req, res) => {
@@ -86,5 +86,5 @@ app.get('/viewer/:id', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log('World generator started on port 3000');
+  console.log(`World generator started on port ${PORT}`);
 });
