@@ -9,12 +9,12 @@ const {Storage} = require('@google-cloud/storage');
 const path = require('path');
 
 const PORT = process.env.PORT || 8080;
-const GENERATION_RANGE = {min: 50, max: 500}
-const WORLD_SIZE_RANGE = {min: 10, max: 100}
+const GENERATION_RANGE = {min: 50, max: 400}
+const WORLD_SIZE_RANGE = {min: 30, max: 150}
 
 const storage = new Storage();
 const BUCKET_NAME = process.env.BUCKET_NAME
-const HOST = process.env.K_SERVICE || 'http://localhost.com'
+const PUBLIC_URL = process.env.PUBLIC_URL || 'http://localhost:' + PORT;
 
 app.use(express.json({limit:"50mb"}));
 
@@ -65,7 +65,7 @@ app.post('/results', async (req, res) => {
 
   await file.save(JSON.stringify(req.body), { metadata: {contentType: 'application/json'}})
   console.log(`saved to ${gameOfLifeBucket.name}/${file.name}`)
-  res.redirect(302, `${HOST}/viewer/${submissionId}`)
+  res.redirect(302, `${PUBLIC_URL}/viewer/${submissionId}`)
 })
 
 app.get('/results/:submissionId', async (req, res) => {
