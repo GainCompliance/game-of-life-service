@@ -113,11 +113,12 @@
       scrubberElement.addEventListener('input', () => {setGeneration(scrubberElement.value)});
     }
 
-    if(!/\/([A-Za-z0-9_-]+)$/.test(window.location.pathname)){
-        updateLoadingMessage(`Unable to find a correct results ID in the URL, it should be formatted like "viewer/LWGtYCEy-N24px5OLaZl5rvE4VqpX_"`);
+    const NANO_ID_AS_LAST_PATH_PART_PATTERN = /\/([A-Za-z0-9_-]+)$/
+    if(!NANO_ID_AS_LAST_PATH_PART_PATTERN.test(window.location.pathname)){
+      updateLoadingMessage(`Unable to find a correct results ID in the URL, it should be formatted like "viewer/LWGtYCEy-N24px5OLaZl5rvE4VqpX_"`);
     }
 
-    const idMatches = window.location.pathname.match(/\/([A-Za-z0-9_-]+)$/)
+    const idMatches = window.location.pathname.match(NANO_ID_AS_LAST_PATH_PART_PATTERN)
     if(idMatches){
       const [_, id] = idMatches;
       fetch(`/results/${id}`).then(response => {
