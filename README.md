@@ -17,14 +17,14 @@ Will return a json object for a world seeded with this id. The response contains
 
 ```json
 {
-  id: 'abc123',
-  generationCount: 5,
-  size: 5,
-  world: [[1,0,0,0,1],
-          [1,0,0,1,1],
-          [1,0,1,0,0],
-          [1,1,0,1,1],
-          [1,0,1,0,0]]
+  "id": "abc123",
+  "generationCount": 5,
+  "size": 5,
+  "world": [[1,0,0,0,1],
+            [1,0,0,1,1],
+            [1,0,1,0,0],
+            [1,1,0,1,1],
+            [1,0,1,0,0]]
 }
 ```
 
@@ -43,9 +43,9 @@ Below is a sample response to this endpoint _(note in this example the generatio
 
 ```json
 {
-  id: 'abc123,
-  generationCount: 5,
-  generations: [
+  "id": "abc123",
+  "generationCount": 5,
+  "generations": [
     [[1,0,0,0,1],
      [1,0,0,1,1],
      [1,0,1,0,0],
