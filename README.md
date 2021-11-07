@@ -80,7 +80,7 @@ Below is a sample response to this endpoint _(note in this example the generatio
 ## 4. `GET /viewer/:id`
 Access this via a browser to interact with the runs of your latest submission. The id is the unique returned from a correct submission to `POST /results`.
 
-![](https://cln.sh/l4yw0C)
+![](https://user-images.githubusercontent.com/626/140633546-cd670422-8b16-4cc0-a7d0-441c415eeac7.jpeg)
 
 
 # Local Development
