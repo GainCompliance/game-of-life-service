@@ -35,7 +35,7 @@ With this information you can now build a really fun game of life simulator in a
 ## 3. `POST /results`
 A post to this endpoint with the correct JSON body will save the results, and redirect you to the viewer for your run. This endpoint expects a post body with the following keys:
 
-* `id` - the id recieved from the server to generate the starting world
+* `id` - the id received from the server to generate the starting world
 * `generationCount` – the number of generations you ran.
 * `generations` - an array of worlds (2d array), each one representing a generation (tick or run) of the world following [conway's game of life rules](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life#Rules)
 
