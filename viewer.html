@@ -20,7 +20,7 @@
         </div>
         <canvas class="m-2" id="world" width="600" height="600"></canvas>
         <div class="flex pt-2 pb-2 border-t">
-          <input id="scrubber" class="w-5/6 m-auto" type="range" value=0 min=0, max=100 />
+          <input id="scrubber" class="w-5/6 m-auto" type="range" value=1 min=1, max=100 />
         </div>
         <div class=" flex justify-around border-t">
           <button id="back" class="rounded p-2 m-2 shadow hover:bg-blue-100 hover:text-blue-500">&larr; Back</button>
@@ -83,7 +83,7 @@
       drawGeneration(currentGeneration);
 
       setGeneration = (gen) => {
-        currentGeneration = Math.min(Math.max(1, gen), generationCount - 1);
+        currentGeneration = Math.min(Math.max(1, gen), generationCount);
         drawGeneration(currentGeneration);
       }
       let isPlaying = false;
@@ -93,7 +93,7 @@
       const play = () => {
         isPlaying = !isPlaying;
         let intervalId = setInterval(() => {
-          if(isPlaying && currentGeneration < generationCount) {
+          if(isPlaying && currentGeneration <= generationCount) {
             setGeneration(currentGeneration+1);
           } else {
             clearInterval(intervalId);
