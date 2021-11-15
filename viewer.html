@@ -60,7 +60,7 @@
       hideLoadingMessage();
       idLabelElement.innerText = id;
       generationCountElement.innerText = generationCount;
-      scrubberElement.max = generationCount + 1;
+      scrubberElement.max = generationCount;
       var size = generations[0][0].length;
       const cellSize = (worldWidth/size) - 1;
       let currentGeneration = 1;
