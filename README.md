@@ -87,7 +87,7 @@ Access this via a browser to interact with the runs of your latest submission. T
 
 1. Clone the code, `git clone git@github.com:GainCompliance/game-of-life-service.git`
 2. Install npm dependencies `npm install`
-3. Copy `.env.sample` to `.env` and update the values
+3. Copy `.env.example` to `.env` and update the values
 3. Run with `npm run dev`
 
 # Deployment
